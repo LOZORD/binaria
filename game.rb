@@ -2,12 +2,13 @@
 # IMPLEMENTS A SINGLE GAME
 
 require_relative 'status.rb'
+require 'json'
 
 class Game
   def initialize
     @day = 1
     @holidays = []
-    @other_states = build_neighbors
+    @neighbors = build_neighbors
     @advisors = build_advisors
 
     puts 'What is your name, Great Leader?'
@@ -22,11 +23,26 @@ class Game
 
 
   def build_neighbors
-    arr = []
-    File.open('neighbors.txt').readlines.each do |line|
-      data = line.split(',')
+    json = File.read('neighbors.json')
+    neighbor_list = JSON.parse(json)['neighbors']
 
-      arr << Neighbor.new { name: data.first }
+    neighbor_list.map do |neighbor|
+      Neighbor.new(neighbor['name'], neighbor['ambassador'])
+    end
+  end
+
+  def build_advisors
+    json = File.read('advisors.json')
+
+    advisor_list = JSON.parse(json)['advisors']
+
+    advisor_list.map do |advisor|
+      neighbor_index = @neighbors.index { |neighbor| neighbor.ambassador == advisor['name'] }
+      if neighbor_index
+        Ambassador.new ( { name: advisor['name'], decisions: advisor['decisions'], nation: @neighbors[neighbor_index] } )
+      else
+        Advisor.new ( { name: advisor['name'], decisions: advisor['decisions'] } )
+      end
     end
   end
 

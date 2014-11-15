@@ -1,0 +1,8 @@
+{
+  "neighbors" : [
+    { "name": "Mongodbia", "ambassador": "Asynchronius" },
+    { "name": "Invaderstan", "ambassador": "The Sous Dictator" },
+    { "name": "Principality of Faygo", "ambassador": "Duke Mist" },
+    { "name": "United Federation Of the Republics of Inland-Antarctica", "ambassador": "Jumbo Notrumbo" }
+  ]
+}
