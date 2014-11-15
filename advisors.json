@@ -43,20 +43,31 @@
           "no": {
             "serf_happiness": -5,
             "lord_happiness": -5
+            }
           }
         },
         {
           "type": "holiday",
+          "name": "Oktoberfest",
           "question": "Start celebrating Oktoberfest?",
           "yes": {
             "tax_rate": 2,
             "gold": -2000,
             "serf_happiness": 20,
-            "lord_happiness": 15
+            "lord_happiness": 15,
+            "celebration": {
+              "gold": -2000,
+              "serf_happiness": 20,
+              "lord_happiness": 15
+            }
           },
           "no": {
             "serf_happiness": -25,
-            "lord_happiness": -10
+            "lord_happiness": -10,
+            "celebration": {
+              "serf_happiness": -1,
+              "lord_happiness": -1
+            }
           }
         }
       ]
