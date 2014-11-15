@@ -10,14 +10,13 @@ class Game
     @holidays = []
     @neighbors = build_neighbors
     @advisors = build_advisors
-
+    @status = Status.new
     puts 'What is your name, Great Leader?'
     puts "Welcome to your kingdom #{@player_name = gets.strip}!"
   end
 
   def play
-    puts 'play time!'
-
+    puts 'play time!'.upcase!
     print_help
   end
 
@@ -39,9 +38,14 @@ class Game
     advisor_list.map do |advisor|
       neighbor_index = @neighbors.index { |neighbor| neighbor.ambassador == advisor['name'] }
       if neighbor_index
-        Ambassador.new ( { name: advisor['name'], decisions: advisor['decisions'], nation: @neighbors[neighbor_index] } )
+        Ambassador.new ( { name: advisor['name'],
+          decisions: advisor['decisions'],
+          nation: @neighbors[neighbor_index],
+          game: self } )
       else
-        Advisor.new ( { name: advisor['name'], decisions: advisor['decisions'] } )
+        Advisor.new ( { name: advisor['name'],
+          decisions: advisor['decisions'],
+          game: self } )
       end
     end
   end

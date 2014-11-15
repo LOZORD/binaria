@@ -4,7 +4,7 @@ class Status
   MAX_MOOD = 100.0
   attr_accessor :rng, :gold, :rock, :wood, :tax_rate, :serf_happiness,
     :lord_happiness, :food
-  def initialize (init_obj)
+  def initialize (init_obj = {})
     seed = init_obj[:seed] || Random.new_seed
     rng = Random.new seed
     gold = init_obj[:gold] || ONE_MILLION

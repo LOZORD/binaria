@@ -1,0 +1,65 @@
+{
+  "advisors": [
+    {
+      "name": "Asynchronius",
+      "decisions": [
+        {
+          "type": "diplomacy",
+          "question": "Gotta go fast?",
+          "yes": {
+            "binaria": {
+              "gold": -5000,
+              "serf_happiness": 20,
+              "lord_happiness": 20
+            },
+            "them": {
+              "gold": 5000,
+              "lord_happiness": 20
+            }
+          },
+          "no": {
+            "binaria": {
+              "serf_happiness": -10,
+              "lord_happiness": -10
+            },
+            "them": {
+              "serf_happiness": -30
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Randy, of the Peasantry",
+      "decisions": [
+        {
+          "type": "normal",
+          "question": "Lower taxes pls?",
+          "yes": {
+            "tax_rate": -5,
+            "serf_happiness": 15,
+            "lord_happiness": 15
+          },
+          "no": {
+            "serf_happiness": -5,
+            "lord_happiness": -5
+          }
+        },
+        {
+          "type": "holiday",
+          "question": "Start celebrating Oktoberfest?",
+          "yes": {
+            "tax_rate": 2,
+            "gold": -2000,
+            "serf_happiness": 20,
+            "lord_happiness": 15
+          },
+          "no": {
+            "serf_happiness": -25,
+            "lord_happiness": -10
+          }
+        }
+      ]
+    }
+  ]
+}
