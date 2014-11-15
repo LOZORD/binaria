@@ -1,18 +1,14 @@
 # GAME CLASS
 # IMPLEMENTS A SINGLE GAME
+
+require_relative 'status.rb'
+
 class Game
-  ONE_MILLION = 1_000_000
-  MAX_TAX = 100.0
-  MAX_MOOD = 100.0
   def initialize
     @day = 1
-    @gold = @stone = @wood = ONE_MILLION
-    @tax_rate = MAX_TAX / 10.0
     @holidays = []
-    @other_states = []
-    @serf_happiness = @lord_happiness = MAX_MOOD / 2
-    @food = 5 * ONE_MILLION
-    @rng = Random.new
+    @other_states = build_neighbors
+    @advisors = build_advisors
 
     puts 'What is your name, Great Leader?'
     puts "Welcome to your kingdom #{@player_name = gets.strip}!"
@@ -22,6 +18,16 @@ class Game
     puts 'play time!'
 
     print_help
+  end
+
+
+  def build_neighbors
+    arr = []
+    File.open('neighbors.txt').readlines.each do |line|
+      data = line.split(',')
+
+      arr << Neighbor.new { name: data.first }
+    end
   end
 
   def print_help
