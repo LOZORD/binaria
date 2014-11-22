@@ -16,6 +16,6 @@ class Holiday
   end
 
   def celebrate!
-    # TODO
+    celebration.each { |some_attr, val| game.status.apply(some_attr, val) }
   end
 end

@@ -7,7 +7,7 @@ require 'json'
 class Game
   def initialize
     @day = 1
-    @holidays = []
+    @holidays = Array.new(Holiday::DAYS_IN_YEAR) { Array.new }
     @neighbors = build_neighbors
     @advisors = build_advisors
     @status = Status.new

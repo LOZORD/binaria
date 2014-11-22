@@ -15,4 +15,22 @@ class Status
     @serf_happiness = init_obj[:serf_happiness] || MAX_MOOD / 2
     @lord_happiness = init_obj[:lord_happiness] || MAX_MOOD / 2
   end
+
+  def apply (some_attr, val)
+    instance_variable_set(prep_attr some_attr, val)
+  end
+
+  def update (some_attr, change_amnt)
+    temp = instance_variable_get(prep_attr some_attr) + change_amnt
+
+    apply(attr, temp)
+  end
+  private
+    def prep_attr (some_attr)
+      unless some_attr.to_s[0] == '@'
+        some_attr = '@' + some_attr.to_s
+      end
+
+      some_attr
+    end
 end

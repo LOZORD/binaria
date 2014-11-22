@@ -48,7 +48,7 @@
         },
         {
           "type": "holiday",
-          "name": "Oktoberfest",
+          "holiday_name": "Oktoberfest",
           "question": "Start celebrating Oktoberfest?",
           "yes": {
             "tax_rate": 2,
