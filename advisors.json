@@ -2,6 +2,7 @@
   "advisors": [
     {
       "name": "Asynchronius",
+      "country": "Mongodbia",
       "decisions": [
         {
           "type": "diplomacy",
@@ -14,7 +15,8 @@
             },
             "them": {
               "gold": 5000,
-              "lord_happiness": 20
+              "lord_happiness": 20,
+              "mood": 10
             }
           },
           "no": {
@@ -23,7 +25,8 @@
               "lord_happiness": -10
             },
             "them": {
-              "serf_happiness": -30
+              "serf_happiness": -30,
+              "mood": -10
             }
           }
         }

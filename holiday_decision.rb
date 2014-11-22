@@ -7,7 +7,8 @@ class Holiday_Decision < Decision
 
   def decide! (choice, day)
     result = choice == :yes ? yes : no
-    status = asker.game.status
+    game = asker.game
+    status = game.status
     celebration = nil
     result.each do |prop, val|
       if prop.to_sym != :celebration
@@ -22,18 +23,16 @@ class Holiday_Decision < Decision
     unless celebration.nil?
       holiday_calendar = asker.game.holidays
 
-      cal_day = asker.game.day % Holiday::DAYS_IN_YEAR
-
       init_obj = {
                     name: name,
                     celebration: celebration,
-                    day: cal_day,
+                    day: day
                     game: asker.game
                  }
 
       new_holiday = Holiday.new(init_obj)
 
-      holiday_calendar[cal_day] << new_holiday
+      holiday_calendar[day] << new_holiday
     end
 
     is_decided = true
