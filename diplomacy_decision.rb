@@ -3,7 +3,8 @@ class Diplomacy_Decision < Decision
 
   def initialize (init_obj)
     super init_obj
-    @neighbor = asker.nation || throw NoNeighborException
+    @neighbor = asker.nation
+    raise 'Needs a neighbor nation!' if @neighbor.nil?
   end
 
   def decide! (choice)

@@ -16,7 +16,7 @@ class Holiday_Decision < Decision
       elsif prop.to_sym == :celebration
         celebration = val
       else
-        throw BadPropertyException
+        raise "Status #{status} has no corresponding property '#{prop}'"
       end
     end
 
@@ -26,7 +26,7 @@ class Holiday_Decision < Decision
       init_obj = {
                     name: name,
                     celebration: celebration,
-                    day: day
+                    day: day,
                     game: asker.game
                  }
 

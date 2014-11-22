@@ -1,9 +1,10 @@
 class Advisor
   attr_accessor :name, :is_active, :mood, :decisions, :game
   def initialize (init_obj)
-    @@advisor_count |= 1
+    @@advisor_count ||= 1
 
-    @game = init_obj[:game] || -1 # FIXME throw Exception 'Needs to be linked to a game!'
+    @game = init_obj[:game]
+    raise ("Advisor needs to be linked to a game!") if @game.nil?
     @name = init_obj[:name] || 'Advisor' + @@advisor_count
 
     @@advisor_count += 1

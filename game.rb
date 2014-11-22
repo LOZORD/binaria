@@ -1,7 +1,6 @@
 # GAME CLASS
 # IMPLEMENTS A SINGLE GAME
 
-require_relative 'status.rb'
 require 'json'
 
 class Game
@@ -26,7 +25,8 @@ class Game
     neighbor_list = JSON.parse(json)['neighbors']
 
     neighbor_list.map do |neighbor|
-      Neighbor.new(neighbor['name'], neighbor['ambassador'])
+      neighbor_obj = { name: neighbor['name'], ambassador: neighbor['ambassador'] }
+      Neighbor.new(neighbor_obj)
     end
   end
 

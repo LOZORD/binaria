@@ -6,7 +6,7 @@ class Status
     :lord_happiness, :food
   def initialize (init_obj = {})
     @seed = init_obj[:seed] || Random.new_seed
-    @rng = Random.new seed
+    @rng = Random.new @seed
     @gold = init_obj[:gold] || ONE_MILLION
     @rock = init_obj[:rock] || ONE_MILLION
     @wood = init_obj[:wood] || ONE_MILLION

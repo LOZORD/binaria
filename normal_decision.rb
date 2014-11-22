@@ -11,7 +11,7 @@ class Normal_Decision < Decision
         val += status.instance_variable_get(prop)
         status.instance_variable_set(prop, val)
       else
-        throw BadPropertyException
+        raise "Status #{status} has no corresponding property '#{prop}'"
       end
     end
 

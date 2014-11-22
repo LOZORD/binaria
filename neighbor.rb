@@ -1,11 +1,12 @@
 class Neighbor
   attr_accessor :name, :status, :mood, :ambassador
   def initialize (init_obj)
-    @@neighbor_count |= 1
+    @@neighbor_count ||= 1
     @name = init_obj[:name] || 'Blargistan' + @@neighbor_count
     @status = Status.new (init_obj[:status] || {})
     @mood = init_obj[:mood] || Status::MAX_MOOD / 2
-    @ambassador  = init_obj[:ambassador] || throw NoAmbassadorException
+    @ambassador  = init_obj[:ambassador]
+    raise 'Needs an Ambassador!' if @ambassador.nil?
     @@neighbor_count += 1
   end
 
@@ -22,15 +23,15 @@ class Neighbor
   end
 
   def relation
-    case mood:
+    case mood
       when (0...33)
-        :enemy
+        return :enemy
       when (33...66)
-        :neutral
+        return :neutral
       when (66..Status::MAX_MOOD)
-        :ally
+        return :ally
       else
-        :neutral
+        return :neutral
     end
   end
 end

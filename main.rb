@@ -1,4 +1,4 @@
-require_relative 'game.rb'
+require_relative 'include.rb'
 
 g = Game.new
 
