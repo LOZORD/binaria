@@ -5,11 +5,12 @@ class Holiday_Decision < Decision
     @name = init_obj[:holiday_name]
   end
 
-  def decide! (choice, day)
+  def decide! (choice)
     result = choice == :yes ? yes : no
     game = asker.game
     status = game.status
     celebration = nil
+    cal_day_today = game.day % Holiday::DAYS_IN_YEAR
     result.each do |prop, val|
       if prop.to_sym != :celebration
         status.update(prop, val)
@@ -26,7 +27,7 @@ class Holiday_Decision < Decision
       init_obj = {
                     name: name,
                     celebration: celebration,
-                    day: day,
+                    day: cal_day_today,
                     game: asker.game
                  }
 

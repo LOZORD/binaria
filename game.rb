@@ -4,19 +4,72 @@
 require 'json'
 
 class Game
+  attr_accessor :day, :holidays, :neighbors, :advisors, :status, :rng
   def initialize
     @day = 1
     @holidays = Array.new(Holiday::DAYS_IN_YEAR) { Array.new }
     @neighbors = build_neighbors
     @advisors = build_advisors
     @status = Status.new
+    @rng = @status.rng
     puts 'What is your name, Great Leader?'
     puts "Welcome to your kingdom #{@player_name = gets.strip}!"
   end
 
   def play
-    puts 'play time!'.upcase!
     print_help
+    user_in = gets.chomp
+
+    until user_in == 'QUIT'
+
+      # first celebrate today's holidays
+      cal_day_today = day % Holiday::DAYS_IN_YEAR
+      holidays[cal_day_today].each do |holiday|
+        holiday.celebrate!
+      end
+
+      todays_decisions = advisors.map do |advisor|
+        if rng.rand > 0.5
+          advisor.decisions.shift
+        else
+          nil
+        end
+      end.compact
+
+      # TODO something with decisions
+      their_decision = ''
+
+      ctr = 0
+
+      while user_in == "\n"
+        if ctr < todays_decisions.size
+          some_decision = todays_decisions[ctr]
+          ctr += 1
+          some_decision.ask
+        else
+          if todays_decisions.size == 0
+            puts 'No decisions today'
+          else
+            puts 'No more decisions today'
+          end
+        end
+        user_in = gets.chomp
+      end
+
+      if user_in.upcase! == 'QUIT'
+        break
+      elsif user_in == 'YES' || user_in == 'Y'
+        their_decision = :yes
+      else
+        their_decision = :no
+      end
+
+      todays_decisions.each { |decision| decision.decide! their_decision }
+
+      @day += 1
+    end
+
+    puts 'GAME OVER'
   end
 
 
@@ -51,8 +104,7 @@ class Game
   end
 
   def print_help
-    s = "Welcome to your reign #{@player_name}!\n"
-    s += '''
+    s = '''
     After disembowling the previous ruler, the lords and ladies of Binaria
      have chosen you as the new Arbiter of justice and goodwill!\n
 
@@ -70,6 +122,8 @@ class Game
      enter in "yes" for Yes, and "no" for No".
 
     What could go wrong?
+
+    (Enter QUIT to leave the game)
     '''
 
     puts s

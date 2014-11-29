@@ -16,6 +16,10 @@ class Holiday
   end
 
   def celebrate!
-    celebration.each { |some_attr, val| game.status.apply(some_attr, val) }
+    puts "Happy #{ name }!"
+    celebration.each do |some_attr, val|
+      puts "\t Your kindom's #{ some_attr } is changed by #{ val }"
+      game.status.apply(some_attr, val)
+    end
   end
 end
