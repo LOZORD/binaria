@@ -26,9 +26,9 @@ class Neighbor
     case mood
       when (0...33)
         return :enemy
-      when (33...66)
+      when (33..66)
         return :neutral
-      when (66..Status::MAX_MOOD)
+      when (67..Status::MAX_MOOD)
         return :ally
       else
         return :neutral
