@@ -11,11 +11,11 @@ class Neighbor
   end
 
   def ally?
-    mood > 33
+    mood > 66
   end
 
   def neutral?
-    33 < mood && mood < 66
+    33 <= mood && mood <= 66
   end
 
   def enemy?
