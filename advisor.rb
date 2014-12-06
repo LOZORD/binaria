@@ -8,7 +8,15 @@ class Advisor
     @@advisor_count += 1
     @mood = Status::MAX_MOOD / 2
 
-    @decisions = init_obj[:decisions]
+    @decisions = init_obj[:decisions].map do |decision|
+      Decision.new({
+        asker:    self,
+        type:     decision['type'],
+        question: decision['question'],
+        yes:      decision['yes'],
+        no:       decision['no'],
+      })
+    end
     raise 'Advisor needs Decisions!' if @decisions.nil? || @decisions.empty?
   end
 end

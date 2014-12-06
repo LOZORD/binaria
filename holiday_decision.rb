@@ -39,4 +39,8 @@ class Holiday_Decision < Decision
     is_decided = true
   end
 
+  def print_results
+    # TODO
+  end
+
 end

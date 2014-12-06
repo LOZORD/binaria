@@ -21,4 +21,8 @@ class Diplomacy_Decision < Decision
       asker.nation.status.update(prop, val)
     end
   end
+
+  def print_results
+    # TODO
+  end
 end

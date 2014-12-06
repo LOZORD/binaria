@@ -36,10 +36,15 @@ class Game
         end
       end.compact
 
-      # TODO something with decisions
+      if todays_decisions.empty?
+        todays_decisions << advisors.first.decisions.shift
+      end
+
       their_decision = ''
 
       ctr = 0
+
+      user_in = "\n"
 
       while user_in == "\n"
         if ctr < todays_decisions.size
@@ -64,7 +69,13 @@ class Game
         their_decision = :no
       end
 
-      todays_decisions.each { |decision| decision.decide! their_decision }
+      puts '-*- In Summary -*-'
+
+      todays_decisions.each do |decision|
+        decision.decide! their_decision
+        puts decision.question
+        puts "\n#{ their_decision.to_s.upcase }"
+      end
 
       @day += 1
     end
@@ -106,22 +117,26 @@ class Game
   def print_help
     s = '''
     After disembowling the previous ruler, the lords and ladies of Binaria
-     have chosen you as the new Arbiter of justice and goodwill!\n
+      have chosen you as the new arbiter of justice and goodwill!
 
     Although your new job will be pretty sweet, you do have to make tough
-     decisions. Every day, advisors and ambassadors will visit you. We know
-     you\'re more of the fighting type, so now all decisions in Binaria are
-     simple Yes or No questions. Pretty easy right?\n
+      decisions. Every day, advisors and ambassadors will visit you. We know
+      you\'re more of the fighting type, so we\'ll keep things simple.
+      As is the custom, decisions in Binaria are simple Yes or No questions.
+      Pretty easy right?
 
     We\'ve also made your job easier by making each decision an Official
-     Decree. This means that all you need to do is say Yes or No to one
-     question, and the same answer applies to all of the others.
+      Decree. This means that all you need to do is say Yes or No to one
+      question, and the same answer applies to all of the others.
 
     Press <Enter> to forward through your visitors\' jibber-jabber.
+
     When you are ready to make your Official Decree,
-     enter in "yes" for Yes, and "no" for No".
+      enter in "yes" for Yes, and "no" for No".
 
     What could go wrong?
+
+    (Press ENTER to continue)
 
     (Enter QUIT to leave the game)
     '''
