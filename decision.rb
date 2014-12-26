@@ -16,17 +16,22 @@ class Decision
     puts "\"#{ question }\""
     puts 'Choosing yes:'
     yes.each do |k, v|
-      sign = v >= 0 ? '+' : ''
-
-      puts "#{ k }:#{ sign + v.to_s }"
+      print_results(k,v)
     end
     puts 'Choosing no:'
     no.each do |k, v|
-      sign = v >= 0 ? '+' : ''
-
-      puts "#{ k }:#{ sign + v.to_s }"
+      print_results(k,v)
     end
   end
 
-  # TODO: make a method of the yes/no.each printing --> i.e. to_s
+  def print_results (key,value)
+    if value > 0
+      sign = '+'
+    elsif value < 0
+      sign = '-'
+    else
+      sign = ''
+    end
+    puts "#{ key }: #{ sign + value.to_s }"
+  end
 end
