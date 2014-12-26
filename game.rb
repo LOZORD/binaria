@@ -23,6 +23,7 @@ class Game
     until user_in == 'QUIT'
 
       # first celebrate today's holidays
+      puts "~~~ DAY #{ day } ~~~".white_on_blue
       cal_day_today = day % Holiday::DAYS_IN_YEAR
       holidays[cal_day_today].each do |holiday|
         holiday.celebrate!
@@ -69,6 +70,7 @@ class Game
         their_decision = :no
       end
 
+      # FIXME: happening too early, off-by-one error perhaps?
       puts '-*- In Summary -*-'
 
       todays_decisions.each do |decision|
@@ -102,14 +104,18 @@ class Game
     advisor_list.map do |advisor|
       neighbor_index = @neighbors.index { |neighbor| neighbor.ambassador == advisor['name'] }
       if neighbor_index
-        Ambassador.new ( { name: advisor['name'],
+        Ambassador.new({
+          name: advisor['name'],
           decisions: advisor['decisions'],
           nation: @neighbors[neighbor_index],
-          game: self } )
+          game: self
+        })
       else
-        Advisor.new ( { name: advisor['name'],
+        Advisor.new({
+          name: advisor['name'],
           decisions: advisor['decisions'],
-          game: self } )
+          game: self
+        })
       end
     end
   end

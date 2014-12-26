@@ -2,7 +2,7 @@ class Decision
   attr_accessor :asker, :question, :yes, :no, :type, :is_decided
   def initialize (init_obj)
     @asker = init_obj[:asker]
-    raise 'Decision needs an Advisor!' if @asker.nil?
+    fail 'Decision needs an Advisor!'.red if @asker.nil?
     @type  = init_obj[:type]
     @question = init_obj[:question]
     @yes = init_obj[:yes]
@@ -11,27 +11,33 @@ class Decision
   end
 
   def ask
-    raise 'Decision already decided!' if is_decided
-    puts "#{ asker.name } asks:"
+    fail 'Decision already decided!'.red if is_decided
+    puts "#{ asker.name } asks:".yellow
     puts "\"#{ question }\""
-    puts 'Choosing yes:'
+    puts "Choosing #{ 'yes'.green }:".bold.blue
     yes.each do |k, v|
-      print_results(k,v)
+      print_result(k,v)
     end
-    puts 'Choosing no:'
+    puts "\nChoosing #{ 'no'.red }:".bold.blue
     no.each do |k, v|
-      print_results(k,v)
+      print_result(k,v)
     end
   end
 
-  def print_results (key,value)
-    if value > 0
-      sign = '+'
-    elsif value < 0
-      sign = '-'
+  def print_result (key, value)
+    fail "Value `#{ value }` must be a number!".red unless value.is_a? Numeric
+    v =
+    if value >= 0
+      ('+' + value.to_s).green
     else
-      sign = ''
+      (value.to_s).red
     end
-    puts "#{ key }: #{ sign + value.to_s }"
+
+    puts "#{ nice_key(key).cyan }: #{ v }"
   end
+
+  private
+    def nice_key (key)
+      key.split('_').map { |n| n.capitalize }.join(' ')
+    end
 end

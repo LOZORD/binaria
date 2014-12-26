@@ -4,7 +4,16 @@ class Diplomacy_Decision < Decision
   def initialize (init_obj)
     super init_obj
     @neighbor = asker.nation
-    raise 'Needs a neighbor nation!' if @neighbor.nil?
+    fail 'Needs a neighbor nation!'.red if @neighbor.nil?
+    # refactor FIXME refactor
+    @yes = {
+      :binaria               => init_obj[:yes]['binaria'] || {},
+      @neighbor.name.to_sym  => init_obj[:yes]['them']    || {}
+    }
+    @no  = {
+      :binaria              => init_obj[:no]['binaria']   || {},
+      @neighbor.name.to_sym => init_obj[:no]['them']      || {}
+    }
   end
 
   def decide! (choice)
@@ -13,16 +22,19 @@ class Diplomacy_Decision < Decision
     game = asker.game
     binaria_status = game.status
 
-    result['binaria'].each do |prop, val|
-      binaria_status.update(prop, val)
+    result[:binaria].each do |key, val|
+      binaria_status.update(key, val)
     end
 
-    result['them'].each do |prop, val|
-      asker.nation.status.update(prop, val)
+    result[@neighbor.name.to_sym].each do |key, val|
+      @neighbor.status.update(key, val)
     end
   end
 
-  def print_results
-    # TODO
+  def print_result (country_name, results)
+    puts country_name.to_s.upcase.bold.magenta
+    puts '-' * 10
+    results.each { |k,v| super(k,v) }
+    puts
   end
 end

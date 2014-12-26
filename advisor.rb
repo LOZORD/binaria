@@ -3,12 +3,12 @@ class Advisor
   def initialize (init_obj)
     @@advisor_count ||= 1
     @game = init_obj[:game]
-    raise ("Advisor needs to be linked to a game!") if @game.nil?
+    fail 'Advisor needs to be linked to a game!'.red if @game.nil?
     @name = init_obj[:name] || 'Advisor' + @@advisor_count
     @@advisor_count += 1
     @mood = Status::MAX_MOOD / 2
     @decisions = build_decisions(init_obj[:decisions])
-    raise 'Advisor needs Decisions!' if @decisions.nil? || @decisions.empty?
+    fail 'Advisor needs Decisions!'.red if @decisions.nil? || @decisions.empty?
   end
 
   def build_decisions (decisions)
@@ -27,7 +27,7 @@ class Advisor
         Normal_Decision.new(options)
       when :diplomacy
         unless self.is_a? Ambassador
-          raise 'Only Ambassadors can make diplomacy decisions!'
+          fail 'Only Ambassadors can make diplomacy decisions!'.red
         end
         options[:neighbor] = self.nation
         Diplomacy_Decision.new(options)
@@ -35,7 +35,7 @@ class Advisor
         options[:holiday_name] = decision_hash['holiday_name']
         Holiday_Decision.new(options)
       else
-        raise "Unsupported Decision type `#{ decision_hash['type'] }` for regular Advisor!"
+        fail "Unsupported Decision type `#{ decision_hash['type'] }` for regular Advisor!".red
       end
     end
   end

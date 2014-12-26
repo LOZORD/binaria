@@ -7,7 +7,7 @@ class Neighbor
     status_options = (init_obj[:status] || {}).merge({ owner: self })
     @status = Neighbor_Status.new(status_options)
     @ambassador  = init_obj[:ambassador]
-    raise 'Needs an Ambassador!' if @ambassador.nil?
+    fail 'Needs an Ambassador!'.red if @ambassador.nil?
     @@neighbor_count += 1
   end
 
@@ -36,3 +36,4 @@ class Neighbor
     end
   end
 end
+

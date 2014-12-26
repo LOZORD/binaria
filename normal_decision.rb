@@ -10,6 +10,11 @@ class Normal_Decision < Decision
       status.update(prop, val)
     end
 
-    is_decided = true
+    @is_decided = true
   end
+
+  def print_result (key, value)
+    super(key, value)
+  end
+
 end

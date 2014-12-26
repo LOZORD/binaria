@@ -17,7 +17,7 @@ class Holiday_Decision < Decision
       elsif prop.to_sym == :celebration
         celebration = val
       else
-        raise "Status #{status} has no corresponding property '#{prop}'"
+        fail "Status #{status} has no corresponding property `#{prop}`".red
       end
     end
 
@@ -36,11 +36,10 @@ class Holiday_Decision < Decision
       holiday_calendar[day] << new_holiday
     end
 
-    is_decided = true
+    @is_decided = true
   end
 
-  def print_results
-    # TODO
+  def print_result(key, value)
+    fail 'unimplemented'.red
   end
-
 end

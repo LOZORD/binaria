@@ -41,7 +41,7 @@ class Status
         else
           owner_name = 'YOU'
         end
-        raise "Attribute `#{ some_attr }` does not exist for #{ owner_name }!"
+        fail "Attribute `#{ some_attr }` does not exist for #{ owner_name }!".red
       end
 
       some_attr

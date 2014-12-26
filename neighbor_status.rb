@@ -4,7 +4,7 @@ class Neighbor_Status < Status
 
   def initialize (init_obj)
     @owner = init_obj[:owner]
-    raise 'Neighbor Status must have an owner!' if @owner.nil?
+    fail 'Neighbor Status must have an owner!'.red if @owner.nil?
     @mood = @owner.mood
     super(init_obj)
   end
