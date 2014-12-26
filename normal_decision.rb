@@ -7,12 +7,7 @@ class Normal_Decision < Decision
     result = choice == :yes ? yes : no
     status = asker.game.status
     result.each do |prop, val|
-      if status.responds_to? prop
-        val += status.instance_variable_get(prop)
-        status.instance_variable_set(prop, val)
-      else
-        raise "Status #{status} has no corresponding property '#{prop}'"
-      end
+      status.update(prop, val)
     end
 
     is_decided = true

@@ -17,18 +17,31 @@ class Status
   end
 
   def apply (some_attr, val)
-    instance_variable_set(prep_attr some_attr, val)
+    my_attr = prep_attr(some_attr)
+    instance_variable_set(my_attr, val)
   end
 
   def update (some_attr, change_amnt)
-    temp = instance_variable_get(prep_attr some_attr) + change_amnt
+    my_attr = prep_attr(some_attr)
 
-    apply(attr, temp)
+    temp = instance_variable_get(my_attr) + change_amnt
+
+    apply(my_attr, temp)
   end
   private
     def prep_attr (some_attr)
       unless some_attr.to_s[0] == '@'
         some_attr = '@' + some_attr.to_s
+      end
+
+      unless self.instance_variable_defined?(some_attr)
+        owner_name = ''
+        if self.is_a? Neighbor_Status
+          owner_name = self.owner.name
+        else
+          owner_name = 'YOU'
+        end
+        raise "Attribute `#{ some_attr }` does not exist for #{ owner_name }!"
       end
 
       some_attr

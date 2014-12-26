@@ -3,8 +3,9 @@ class Neighbor
   def initialize (init_obj)
     @@neighbor_count ||= 1
     @name = init_obj[:name] || 'Blargistan' + @@neighbor_count
-    @status = Status.new (init_obj[:status] || {})
     @mood = init_obj[:mood] || Status::MAX_MOOD / 2
+    status_options = (init_obj[:status] || {}).merge({ owner: self })
+    @status = Neighbor_Status.new(status_options)
     @ambassador  = init_obj[:ambassador]
     raise 'Needs an Ambassador!' if @ambassador.nil?
     @@neighbor_count += 1

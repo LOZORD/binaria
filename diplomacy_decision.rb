@@ -13,11 +13,11 @@ class Diplomacy_Decision < Decision
     game = asker.game
     binaria_status = game.status
 
-    result[:binaria].each do |prop, val|
+    result['binaria'].each do |prop, val|
       binaria_status.update(prop, val)
     end
 
-    result[:them].each do |prop, val|
+    result['them'].each do |prop, val|
       asker.nation.status.update(prop, val)
     end
   end

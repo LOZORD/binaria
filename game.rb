@@ -19,7 +19,7 @@ class Game
   def play
     print_help
     user_in = gets.chomp
-
+    # FIXME
     until user_in == 'QUIT'
 
       # first celebrate today's holidays
@@ -64,7 +64,11 @@ class Game
         their_decision = :no
       end
 
-      todays_decisions.each { |decision| decision.decide! their_decision }
+      if their_decision
+        todays_decisions.each { |decision| decision.decide! their_decision }
+      else
+        puts 'NEED A DECISION' # FIXME
+      end
 
       @day += 1
     end
@@ -106,12 +110,12 @@ class Game
   def print_help
     s = '''
     After disembowling the previous ruler, the lords and ladies of Binaria
-     have chosen you as the new Arbiter of justice and goodwill!\n
+     have chosen you as the new Arbiter of justice and goodwill!
 
     Although your new job will be pretty sweet, you do have to make tough
      decisions. Every day, advisors and ambassadors will visit you. We know
      you\'re more of the fighting type, so now all decisions in Binaria are
-     simple Yes or No questions. Pretty easy right?\n
+     simple Yes or No questions. Pretty easy right?
 
     We\'ve also made your job easier by making each decision an Official
      Decree. This means that all you need to do is say Yes or No to one
