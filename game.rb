@@ -28,55 +28,61 @@ class Game
       holidays[cal_day_today].each do |holiday|
         holiday.celebrate!
       end
+      # print the status of the Binarian nation afterwards
+      puts status.to_s
 
-      todays_decisions = advisors.map do |advisor|
+      todays_decisions = (advisors.map do |advisor|
         if rng.rand > 0.5
           advisor.decisions.shift
         else
           nil
         end
-      end.compact
+      end).compact
 
       if todays_decisions.empty?
         todays_decisions << advisors.first.decisions.shift
       end
 
-      their_decision = ''
+      unless todays_decisions.empty?
+        their_decision = ''
 
-      ctr = 0
+        ctr = 0
 
-      user_in = "\n"
+        user_in = "\n"
 
-      while user_in == "\n"
-        if ctr < todays_decisions.size
-          some_decision = todays_decisions[ctr]
-          ctr += 1
-          some_decision.ask
-        else
-          if todays_decisions.size == 0
-            puts 'No decisions today'
+        # FIXME - off-by-one error it seems
+        while user_in == "\n"
+          if ctr < todays_decisions.size
+            some_decision = todays_decisions[ctr]
+            ctr += 1
+            some_decision.ask
           else
-            puts 'No more decisions today'
+            if todays_decisions.size == 0
+              puts 'No decisions today'
+            else
+              puts 'No more decisions today'
+            end
           end
+          user_in = gets
         end
-        user_in = gets.chomp
-      end
 
-      if user_in.upcase! == 'QUIT'
-        break
-      elsif user_in == 'YES' || user_in == 'Y'
-        their_decision = :yes
-      else
-        their_decision = :no
-      end
+        if user_in.chomp!.upcase! == 'QUIT'
+          break
+        elsif user_in == 'YES' || user_in == 'Y'
+          their_decision = :yes
+        else
+          their_decision = :no
+        end
 
-      # FIXME: happening too early, off-by-one error perhaps?
-      puts '-*- In Summary -*-'
+        # FIXME: happening too early, off-by-one error perhaps?
+        puts '-*- In Summary -*-'
 
-      todays_decisions.each do |decision|
-        decision.decide! their_decision
-        puts decision.question
-        puts "\n#{ their_decision.to_s.upcase }"
+        todays_decisions.each do |decision|
+          decision.decide! their_decision
+          puts decision.question
+          puts "\n#{ their_decision.to_s.upcase }"
+        end
+
       end
 
       @day += 1

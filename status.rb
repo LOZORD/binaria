@@ -16,6 +16,14 @@ class Status
     @lord_happiness = init_obj[:lord_happiness] || MAX_MOOD / 2
   end
 
+
+  def to_s
+    # TODO: figure out how to right align the RHS attr
+    printables.map do |item|
+      "#{ item.to_s.upcase.bold.yellow }: #{ self.send(item).to_s.yellow }"
+    end.join("\n")
+  end
+
   def apply (some_attr, val)
     my_attr = prep_attr(some_attr)
     instance_variable_set(my_attr, val)
@@ -45,5 +53,9 @@ class Status
       end
 
       some_attr
+    end
+
+    def printables
+      [:gold, :rock, :wood, :food, :tax_rate, :serf_happiness, :lord_happiness]
     end
 end
