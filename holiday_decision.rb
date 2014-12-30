@@ -39,6 +39,7 @@ class Holiday_Decision < Decision
     @is_decided = true
   end
 
+  # FIXME
   def print_result(key, value)
     fail 'unimplemented'.red
   end

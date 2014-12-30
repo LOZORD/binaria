@@ -16,13 +16,13 @@ class Advisor
 
       options = {
         asker:      self,
-        type:       decision_hash['type'],
-        question:   decision_hash['question'],
-        yes:        decision_hash['yes'],
-        no:         decision_hash['no']
+        type:       decision_hash[:type],
+        question:   decision_hash[:question],
+        yes:        decision_hash[:yes],
+        no:         decision_hash[:no]
       }
 
-      case decision_hash['type'].to_sym
+      case decision_hash[:type].to_sym
       when :normal
         Normal_Decision.new(options)
       when :diplomacy
@@ -32,7 +32,7 @@ class Advisor
         options[:neighbor] = self.nation
         Diplomacy_Decision.new(options)
       when :holiday
-        options[:holiday_name] = decision_hash['holiday_name']
+        options[:holiday_name] = decision_hash[:holiday_name]
         Holiday_Decision.new(options)
       else
         fail "Unsupported Decision type `#{ decision_hash['type'] }` for regular Advisor!".red

@@ -5,14 +5,13 @@ class Diplomacy_Decision < Decision
     super init_obj
     @neighbor = asker.nation
     fail 'Needs a neighbor nation!'.red if @neighbor.nil?
-    # refactor FIXME refactor
     @yes = {
-      :binaria               => init_obj[:yes]['binaria'] || {},
-      @neighbor.name.to_sym  => init_obj[:yes]['them']    || {}
+      :binaria               => init_obj[:yes][:binaria] || {},
+      @neighbor.name.to_sym  => init_obj[:yes][:them]    || {}
     }
     @no  = {
-      :binaria              => init_obj[:no]['binaria']   || {},
-      @neighbor.name.to_sym => init_obj[:no]['them']      || {}
+      :binaria              => init_obj[:no][:binaria]   || {},
+      @neighbor.name.to_sym => init_obj[:no][:them]      || {}
     }
   end
 

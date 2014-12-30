@@ -5,6 +5,7 @@ require 'json'
 
 class Game
   attr_accessor :day, :holidays, :neighbors, :advisors, :status, :rng
+  JSON_OPTS = { symbolize_names: true }
   def initialize
     @day = 1
     @holidays = Array.new(Holiday::DAYS_IN_YEAR) { Array.new }
@@ -54,8 +55,8 @@ class Game
         while user_in == "\n"
           if ctr < todays_decisions.size
             some_decision = todays_decisions[ctr]
-            ctr += 1
             some_decision.ask
+            ctr += 1
           else
             if todays_decisions.size == 0
               puts 'No decisions today'
@@ -94,10 +95,10 @@ class Game
 
   def build_neighbors
     json = File.read('neighbors.json')
-    neighbor_list = JSON.parse(json)['neighbors']
+    neighbor_list = JSON.parse(json, JSON_OPTS)[:neighbors]
 
     neighbor_list.map do |neighbor|
-      neighbor_obj = { name: neighbor['name'], ambassador: neighbor['ambassador'] }
+      neighbor_obj = { name: neighbor[:name], ambassador: neighbor[:ambassador] }
       Neighbor.new(neighbor_obj)
     end
   end
@@ -105,21 +106,21 @@ class Game
   def build_advisors
     json = File.read('advisors.json')
 
-    advisor_list = JSON.parse(json)['advisors']
+    advisor_list = JSON.parse(json, JSON_OPTS)[:advisors]
 
     advisor_list.map do |advisor|
-      neighbor_index = @neighbors.index { |neighbor| neighbor.ambassador == advisor['name'] }
+      neighbor_index = @neighbors.index { |neighbor| neighbor.ambassador == advisor[:name] }
       if neighbor_index
         Ambassador.new({
-          name: advisor['name'],
-          decisions: advisor['decisions'],
+          name: advisor[:name],
+          decisions: advisor[:decisions],
           nation: @neighbors[neighbor_index],
           game: self
         })
       else
         Advisor.new({
-          name: advisor['name'],
-          decisions: advisor['decisions'],
+          name: advisor[:name],
+          decisions: advisor[:decisions],
           game: self
         })
       end

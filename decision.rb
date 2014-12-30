@@ -38,6 +38,6 @@ class Decision
 
   private
     def nice_key (key)
-      key.split('_').map { |n| n.capitalize }.join(' ')
+      key.to_s.split('_').map { |n| n.capitalize }.join(' ')
     end
 end
