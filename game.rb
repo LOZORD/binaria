@@ -4,10 +4,10 @@
 require 'json'
 
 class Game
-  attr_accessor :day, :holidays, :neighbors, :advisors, :status, :rng
+  attr_accessor :day, :holidays, :neighbors, :advisors, :status, :rng, :player_name
   JSON_OPTS = { symbolize_names: true }
   def initialize
-    @day = 1
+    @day = 0
     @holidays = Array.new(Holiday::DAYS_IN_YEAR) { Array.new }
     @neighbors = build_neighbors
     @advisors = build_advisors
@@ -24,38 +24,33 @@ class Game
     until user_in == 'QUIT'
 
       # first celebrate today's holidays
-      puts "~~~ DAY #{ day } ~~~".white_on_blue
-      cal_day_today = day % Holiday::DAYS_IN_YEAR
+      puts "~~~ DAY #{ day + 1 } ~~~".white_on_blue
+      puts "Calendar day #{ human_cal_day_today } of #{ Holiday::DAYS_IN_YEAR }".white_on_blue
       holidays[cal_day_today].each do |holiday|
         holiday.celebrate!
       end
+      # TODO: add a daily consumption/update (randomized?)
       # print the status of the Binarian nation afterwards
       puts status.to_s
 
       todays_decisions = (advisors.map do |advisor|
-        if rng.rand > 0.5
+        if rng.rand > 0.5 && !advisor.decisions.empty?
           advisor.decisions.shift
-        else
-          nil
         end
       end).compact
 
-      if todays_decisions.empty?
-        todays_decisions << advisors.first.decisions.shift
-      end
-
       unless todays_decisions.empty?
+        puts ("\nOh Powerful #{ player_name }, your advisors and ambassadors come to you with #{ todays_decisions.size } decisions today!\n")
+
         their_decision = ''
 
         ctr = 0
 
         user_in = "\n"
 
-        # FIXME - off-by-one error it seems
         while user_in == "\n"
           if ctr < todays_decisions.size
             some_decision = todays_decisions[ctr]
-            p todays_decisions if some_decision.nil?
             some_decision.ask
             ctr += 1
           else
@@ -78,7 +73,6 @@ class Game
           colorized = :red_on_white
         end
 
-        # FIXME: happening too early, off-by-one error perhaps?
         puts '-*- In Summary -*-'
 
         todays_decisions.each do |decision|
@@ -86,6 +80,8 @@ class Game
           puts "#{ decision.asker.name.bold }:\t#{ decision.question }"
           puts "\t#{ (' ' + their_decision.to_s.upcase + ' ').send(colorized) }"
         end
+      else
+        puts "No decisions need to be made today #{ player_name }...".bold.black
       end
       @day += 1
     end
@@ -157,5 +153,13 @@ class Game
     '''
 
     puts s
+  end
+
+  def cal_day_today
+    day % Holiday::DAYS_IN_YEAR
+  end
+
+  def human_cal_day_today
+    (cal_day_today + 1).to_s
   end
 end

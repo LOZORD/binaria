@@ -13,7 +13,6 @@ class Holiday_Decision < Decision
     game = asker.game
     status = game.status
     celebration = nil
-    cal_day_today = game.day % Holiday::DAYS_IN_YEAR
     result.each do |prop, val|
       if prop.to_sym != :celebration
         status.update(prop, val)
@@ -28,22 +27,27 @@ class Holiday_Decision < Decision
       holiday_calendar = asker.game.holidays
 
       init_obj = {
-                    name: name,
-                    celebration: celebration,
-                    day: cal_day_today,
-                    game: asker.game
+                    game:         game,
+                    name:         name,
+                    celebration:  celebration,
+                    day:          game.cal_day_today,
+                    game:         asker.game
                  }
 
       new_holiday = Holiday.new(init_obj)
 
-      holiday_calendar[cal_day_today] << new_holiday
+      holiday_calendar[game.cal_day_today] << new_holiday
     end
 
     @is_decided = true
   end
 
-  # FIXME
   def print_result(key, value)
-    fail 'unimplemented'.red
+    if (value.is_a? Hash) && (!value.empty?)
+      puts "Every year on this day (#{ asker.game.human_cal_day_today }):".yellow
+      value.each { |k, v| super(k, v) }
+    else
+      super(key, value)
+    end
   end
 end
