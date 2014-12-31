@@ -55,6 +55,7 @@ class Game
         while user_in == "\n"
           if ctr < todays_decisions.size
             some_decision = todays_decisions[ctr]
+            p todays_decisions if some_decision.nil?
             some_decision.ask
             ctr += 1
           else
@@ -71,8 +72,10 @@ class Game
           break
         elsif user_in == 'YES' || user_in == 'Y'
           their_decision = :yes
+          colorized = :green_on_white
         else
           their_decision = :no
+          colorized = :red_on_white
         end
 
         # FIXME: happening too early, off-by-one error perhaps?
@@ -80,15 +83,12 @@ class Game
 
         todays_decisions.each do |decision|
           decision.decide! their_decision
-          puts decision.question
-          puts "\n#{ their_decision.to_s.upcase }"
+          puts "#{ decision.asker.name.bold }:\t#{ decision.question }"
+          puts "\t#{ (' ' + their_decision.to_s.upcase + ' ').send(colorized) }"
         end
-
       end
-
       @day += 1
     end
-
     puts 'GAME OVER'
   end
 

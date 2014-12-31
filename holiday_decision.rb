@@ -7,6 +7,9 @@ class Holiday_Decision < Decision
 
   def decide! (choice)
     result = choice == :yes ? yes : no
+    if result == :yes
+      puts "JOYOUS #{ name } TO YOU DEAR LEADER!".bold_green_on_yellow
+    end
     game = asker.game
     status = game.status
     celebration = nil
@@ -33,7 +36,7 @@ class Holiday_Decision < Decision
 
       new_holiday = Holiday.new(init_obj)
 
-      holiday_calendar[day] << new_holiday
+      holiday_calendar[cal_day_today] << new_holiday
     end
 
     @is_decided = true

@@ -6,7 +6,7 @@
       "decisions": [
         {
           "type": "diplomacy",
-          "question": "Gotta go fast?",
+          "question": "Do you wish to build a road between our two kingdoms?",
           "yes": {
             "binaria": {
               "gold": -5000,
