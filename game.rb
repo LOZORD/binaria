@@ -4,11 +4,12 @@
 require 'json'
 
 class Game
-  attr_accessor :day, :holidays, :neighbors, :advisors, :status, :rng, :player_name
+  attr_accessor :day, :holidays, :neighbors, :advisors, :status, :rng, :player_name, :projects
   JSON_OPTS = { symbolize_names: true }
   def initialize
     @day = 0
     @holidays = Array.new(Holiday::DAYS_IN_YEAR) { Array.new }
+    @projects = []
     @neighbors = build_neighbors
     @advisors = build_advisors
     @status = Status.new
@@ -30,7 +31,19 @@ class Game
       end
       # TODO: add a daily consumption/update (randomized?)
       # print the status of the Binarian nation afterwards
+      # SOLUTION: use Projects as daily changes!
+      unless projects.empty?
+        puts "### PROJECTS (#{ projects.size }) ###".white_on_green
+        projects.each do |project|
+          project.update!
+        end
+
+        @projects = @projects.compact
+      end
+
       puts status.to_s
+
+      ### TODO print list of neighboring country relations (ally, enemy, neutral)
 
       todays_decisions = (advisors.map do |advisor|
         if rng.rand > 0.5 && !advisor.decisions.empty?
@@ -39,7 +52,7 @@ class Game
       end).compact
 
       unless todays_decisions.empty?
-        puts ("\nOh Powerful #{ player_name }, your advisors and ambassadors come to you with #{ todays_decisions.size } decisions today!\n")
+        puts ("\nOh Powerful #{ player_name }, your advisors and ambassadors come to you with #{ todays_decisions.size.to_s.bold } decisions today!\n")
 
         their_decision = ''
 
