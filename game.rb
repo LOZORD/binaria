@@ -20,7 +20,6 @@ class Game
   def play
     print_help
     user_in = gets.chomp
-    # FIXME
     until user_in == 'QUIT'
 
       # first celebrate today's holidays

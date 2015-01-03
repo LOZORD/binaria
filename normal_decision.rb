@@ -1,9 +1,9 @@
 class Normal_Decision < Decision
-  def initialize (init_obj)
+  def initialize(init_obj)
     super(init_obj)
   end
 
-  def decide! (choice)
+  def decide!(choice)
     result = choice == :yes ? yes : no
     status = asker.game.status
     result.each do |prop, val|
@@ -13,8 +13,7 @@ class Normal_Decision < Decision
     @is_decided = true
   end
 
-  def print_result (key, value)
+  def print_result(key, value)
     super(key, value)
   end
-
 end

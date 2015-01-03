@@ -24,12 +24,12 @@ class Status
     end.join("\n")
   end
 
-  def apply (some_attr, val)
+  def apply(some_attr, val)
     my_attr = prep_attr(some_attr)
     instance_variable_set(my_attr, val)
   end
 
-  def update (some_attr, change_amnt)
+  def update(some_attr, change_amnt)
     my_attr = prep_attr(some_attr)
 
     temp = instance_variable_get(my_attr) + change_amnt
@@ -37,7 +37,7 @@ class Status
     apply(my_attr, temp)
   end
   private
-    def prep_attr (some_attr)
+    def prep_attr(some_attr)
       unless some_attr.to_s[0] == '@'
         some_attr = '@' + some_attr.to_s
       end
