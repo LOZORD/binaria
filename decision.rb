@@ -25,6 +25,7 @@ class Decision
   end
 
   def print_result (key, value)
+    # TODO: make sure this never happens!
     fail "Value `#{ value }` must be a number!".red unless value.is_a? Numeric
     v =
     if value >= 0

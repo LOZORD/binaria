@@ -61,7 +61,13 @@ class Game
       end).compact
 
       unless todays_decisions.empty?
-        puts ("\nOh Powerful #{ player_name }, your advisors and ambassadors come to you with #{ todays_decisions.size.to_s.bold } decisions today!\n")
+        print "\nOh Powerful #{ player_name }, your advisors and ambassadors "
+        print "come to you with #{ todays_decisions.size.to_s.bold } "
+        if todays_decisions.size == 1
+          puts 'decision'
+        else
+          puts 'decisions'
+        end
 
         their_decision = ''
 
@@ -256,8 +262,11 @@ class Game
       end
     end
 
+    # TODO test me!!!
     def tax_day?
-      cal_day_today % (Holiday::DAYS_IN_YEAR) == 0
+      tax_day = (Holiday::DAYS_IN_YEAR/4)
+      # is it the last day of the quarter?
+      return (cal_day_today % (Holiday::DAYS_IN_YEAR/4)) == (tax_day - 1)
     end
 
     def collect_taxes!

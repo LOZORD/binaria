@@ -36,6 +36,14 @@ class Status
     temp = instance_variable_get(my_attr) + change_amnt
     apply(my_attr, temp)
   end
+
+  def update_with_change (status_change)
+    unless status_change is_a? StatusChange
+      fail '`update_with_change` must take a StatusChange object as the argument'
+    end
+
+    status_change.updated_fields
+  end
   private
     def prep_attr(some_attr)
       unless some_attr.to_s[0] == '@'

@@ -20,9 +20,9 @@ class Project
     days_to_completion -= 1
     if self.complete?
       puts "PROJECT #{ name }: COMPLETE!".bold.magenta
+      game.status.apply @completetion_status
       # FIXME --> an object needs to be made
       fail 'create StatusChange obj!'.bold.cyan
-      game.status.apply @completetion_status
     else
       puts "PROJECT #{ name }: #{ days_to_completion } days until complete"
       game.status.apply @daily_status
