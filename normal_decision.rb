@@ -1,4 +1,4 @@
-class Normal_Decision < Decision
+class NormalDecision < Decision
   def initialize(init_obj)
     super(init_obj)
   end

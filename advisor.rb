@@ -24,18 +24,22 @@ class Advisor
 
       case decision_hash[:type].to_sym
       when :normal
-        Normal_Decision.new(options)
+        NormalDecision.new(options)
       when :diplomacy
         unless self.is_a? Ambassador
           fail 'Only Ambassadors can make diplomacy decisions!'.red
         end
         options[:neighbor] = self.nation
-        Diplomacy_Decision.new(options)
+        DiplomacyDecision.new(options)
       when :holiday
         options[:holiday_name] = decision_hash[:holiday_name]
-        Holiday_Decision.new(options)
+        HolidayDecision.new(options)
+      when :project
+        options[:project_name]      = decision_hash[:project_name]
+        options[:days_to_complete]  = decision_hash[:days_to_complete]
+        ProjectDecision.new(options)
       else
-        fail "Unsupported Decision type `#{ decision_hash['type'] }` for regular Advisor!".red
+        fail "Unsupported Decision type `#{ decision_hash[:type] }` for regular Advisor!".red
       end
     end
   end

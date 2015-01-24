@@ -1,4 +1,4 @@
-class Diplomacy_Decision < Decision
+class DiplomacyDecision < Decision
   attr_accessor :neighbor
 
   def initialize (init_obj)

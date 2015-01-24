@@ -10,7 +10,7 @@ class Status
     @gold = init_obj[:gold] || ONE_MILLION
     @rock = init_obj[:rock] || ONE_MILLION
     @wood = init_obj[:wood] || ONE_MILLION
-    @food = init_obj[:food] || ONE_MILLION * 5
+    @food = init_obj[:food] || ONE_MILLION
     @tax_rate = MAX_TAX / 10.0
     @serf_happiness = init_obj[:serf_happiness] || MAX_MOOD / 2
     @lord_happiness = init_obj[:lord_happiness] || MAX_MOOD / 2
@@ -18,7 +18,8 @@ class Status
 
 
   def to_s
-    # TODO: figure out how to right align the RHS attr
+    # XXX: figure out how to right align the RHS attr
+    # solution: str.rjust(80), but do we still want to use this?
     printables.map do |item|
       "#{ item.to_s.upcase.bold.yellow }: #{ self.send(item).to_s.yellow }"
     end.join("\n")

@@ -1,4 +1,4 @@
-class Holiday_Decision < Decision
+class HolidayDecision < Decision
   attr_accessor :name
   def initialize (init_obj)
     super(init_obj)

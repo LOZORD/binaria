@@ -71,6 +71,26 @@
               "lord_happiness": -1
             }
           }
+        },
+        {
+          "type": "project",
+          "project_name": "Build Diamond Pickaxes",
+          "days_to_completion": 30,
+          "question": "Shall we invest in diamond pickaxes for our miners and minors?",
+          "yes": {
+            "daily_status": {
+              "wood": -200,
+              "gold": -300,
+              "rock": -400
+            },
+            "completion_status": {
+              "gold": 7500,
+              "serf_happiness": 20
+            }
+          },
+          "no": {
+            "serf_happiness": -15
+          }
         }
       ]
     }
