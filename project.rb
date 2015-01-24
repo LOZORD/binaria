@@ -17,13 +17,12 @@ class Project
   end
 
   def update!
-    days_to_complete -= 1
+    days_to_completion -= 1
     if self.complete?
-      # TODO message
-        game.status.apply @completetion_status
-      # self = nil
+      puts "PROJECT #{ name }: COMPLETE!".bold.magenta
+      game.status.apply @completetion_status
     else
-      # TODO message
+      puts "PROJECT #{ name }: #{ days_to_completion } days until complete"
       game.status.apply @daily_status
     end
   end

@@ -33,8 +33,6 @@ class Status
     my_attr = prep_attr(some_attr)
 
     temp = instance_variable_get(my_attr) + change_amnt
-    # FIXME
-    fail 'FIXME, do something with max(temp,0)' if temp < 0
     apply(my_attr, temp)
   end
   private

@@ -38,8 +38,10 @@ class Game
       # give an update on current projects
       unless projects.empty?
         puts "### PROJECTS (#{ projects.size }) ###".white_on_green
+        # update all on-going projects
         projects.each { |project| project.update! }
-        @projects = @projects.compact
+        # removed completed projects
+        projects.keep_if { |project| not project.complete? }
       end
 
       # check if any end-game/losing conditions are satisfied
