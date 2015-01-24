@@ -41,6 +41,8 @@ class Game
         @projects = @projects.compact
       end
 
+      # TODO: check if any end-game/losing conditions are satisfied
+
       puts status.to_s
 
       ### TODO print list of neighboring country relations (ally, enemy, neutral)

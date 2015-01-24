@@ -18,9 +18,10 @@ class Holiday
 
   def celebrate!
     puts "Happy #{ name }!"
+    # FIXME --> this should really be an object...
     celebration.each do |some_attr, val|
       puts "\t Your kingdom's #{ some_attr } is changed by #{ val }"
-      game.status.apply(some_attr, val)
+      game.status.update(some_attr, val)
     end
   end
 end

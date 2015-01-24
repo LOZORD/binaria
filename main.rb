@@ -4,4 +4,4 @@ g = Game.new
 
 g.play
 
-puts 'Game Over'
+puts 'Goodbye!'
