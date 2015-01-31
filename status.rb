@@ -2,8 +2,12 @@ class Status
   ONE_MILLION = 1_000_000
   MAX_TAX = 100.0
   MAX_MOOD = 100.0
-  attr_accessor :rng, :gold, :rock, :wood, :tax_rate, :serf_happiness,
-    :lord_happiness, :food
+  RESOURCES = [:gold, :rock, :wood, :food, :tax_rate, :serf_happiness, :lord_happiness]
+
+  RESOURCES.each { |r| attr_accessor r }
+
+  attr_accessor :rng
+
   def initialize (init_obj = {})
     @seed = init_obj[:seed] || Random.new_seed
     @rng = Random.new @seed
@@ -20,31 +24,32 @@ class Status
   def to_s
     # XXX: figure out how to right align the RHS attr
     # solution: str.rjust(80), but do we still want to use this?
-    printables.map do |item|
+    RESOURCES.map do |item|
       "#{ item.to_s.upcase.bold.yellow }: #{ self.send(item).to_s.yellow }"
     end.join("\n")
   end
 
-  def apply(some_attr, val)
-    my_attr = prep_attr(some_attr)
-    instance_variable_set(my_attr, val)
-  end
-
-  def update(some_attr, change_amnt)
-    my_attr = prep_attr(some_attr)
-
-    temp = instance_variable_get(my_attr) + change_amnt
-    apply(my_attr, temp)
-  end
-
   def update_with_change (status_change)
     unless status_change is_a? StatusChange
-      fail '`update_with_change` must take a StatusChange object as the argument'
+      fail '`update_with_change` must take a StatusChange object as the argument'.red
     end
 
-    status_change.updated_fields
+    RESOURCES.each do |resource|
+      update(resource, status_change[resource])
+    end
   end
   private
+    def apply(some_attr, val)
+      my_attr = prep_attr(some_attr)
+      instance_variable_set(my_attr, val)
+    end
+
+    def update(some_attr, change_amnt)
+      my_attr = prep_attr(some_attr)
+
+      temp = instance_variable_get(my_attr) + change_amnt
+      apply(my_attr, temp)
+    end
     def prep_attr(some_attr)
       unless some_attr.to_s[0] == '@'
         some_attr = '@' + some_attr.to_s
@@ -61,9 +66,5 @@ class Status
       end
 
       some_attr
-    end
-
-    def printables
-      [:gold, :rock, :wood, :food, :tax_rate, :serf_happiness, :lord_happiness]
     end
 end

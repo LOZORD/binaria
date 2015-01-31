@@ -44,6 +44,15 @@ class Game
         projects.keep_if { |project| not project.complete? }
       end
 
+      # print list of neighboring country relations (ally, enemy, neutral)
+      if report_day?
+        puts 'Your Master of Espionage reports the following on your neighbors...'.bold
+        neighbors.each do |n|
+          color = n.ally? ? :green : n.neutral? ? :yellow : :red
+          puts "#{ n.name }: #{ n.relation }".send(color)
+        end
+      end
+
       # check if any end-game/losing conditions are satisfied
       if lost_game?
         puts "CONGRATULATIONS, YOU'VE RULED FOR #{ day } DAYS!"
@@ -51,8 +60,6 @@ class Game
       end
 
       puts status.to_s
-
-      ### TODO print list of neighboring country relations (ally, enemy, neutral)
 
       todays_decisions = (advisors.map do |advisor|
         if rng.rand > 0.5 && !advisor.decisions.empty?
@@ -120,10 +127,12 @@ class Game
     json = File.read('neighbors.json')
     neighbor_list = JSON.parse(json, JSON_OPTS)[:neighbors]
 
-    neighbor_list.map do |neighbor|
+    neighbor_list.map! do |neighbor|
       neighbor_obj = { name: neighbor[:name], ambassador: neighbor[:ambassador] }
       Neighbor.new(neighbor_obj)
     end
+
+    neighbor_list.sort { |a, b| a.name <=> b.name }
   end
 
   def build_advisors
@@ -262,11 +271,10 @@ class Game
       end
     end
 
-    # TODO test me!!!
     def tax_day?
-      tax_day = (Holiday::DAYS_IN_YEAR/4)
-      # is it the last day of the quarter?
-      return (cal_day_today % (Holiday::DAYS_IN_YEAR/4)) == (tax_day - 1)
+      tax_period = Holiday::DAYS_IN_YEAR / 4
+
+      cal_day_today % tax_period == tax_period - 1
     end
 
     def collect_taxes!
@@ -278,6 +286,10 @@ class Game
         status.serf_happiness -= 5
         status.lord_happiness -= 5
       end
+    end
+
+    def report_day?
+      cal_day_today == Holiday::DAYS_IN_YEAR % 7
     end
   # end private
 end

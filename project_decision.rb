@@ -12,8 +12,8 @@ class ProjectDecision < Decision
       arg_data = {
         name: @project_name,
         game: self.game,
-        daily_status: nil, # StatusChange(yes[:daily_status])
-        completion_status: nil, # StatusChange(yes[:completion_status])
+        daily_status:       StatusChange.new(yes[:daily_status]),
+        completion_status:  StatusChange.new(yes[:completion_status]),
         days_to_completion: @days_to_completion
       }
 
@@ -23,7 +23,7 @@ class ProjectDecision < Decision
       asker.game.projects << new_proj
     else
       puts 'The proposed project will not happen'.red
-      asker.game.status.apply StatusChange.new(no)
+      asker.game.status.update_with_change StatusChange.new(no)
     end
   end
 

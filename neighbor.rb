@@ -12,15 +12,15 @@ class Neighbor
   end
 
   def ally?
-    mood > 66
+    relation == :ally
   end
 
   def neutral?
-    33 <= mood && mood <= 66
+    relation == :neutral
   end
 
   def enemy?
-    mood < 33
+    relation == :enemy
   end
 
   def relation

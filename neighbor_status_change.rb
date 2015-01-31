@@ -1,5 +1,5 @@
 class NeighborStatusChange < StatusChange
-  attr_accessor :neighbor, :mood
+  attr_accessor :neighbor
 
   def initialize (init_obj)
     super(init_obj)
@@ -7,10 +7,13 @@ class NeighborStatusChange < StatusChange
     if @neighbor.nil?
       fail 'NeighborStatusChange must have an associated neighbor!'
     end
-    @mood = init_obj[:mood]
+    @changes[:mood] = init_obj[:neighbor] || 0
   end
 
-  def fields
-    super << :mood
+  def print_result (country_name, results)
+    puts country_name.to_s.upcase.bold.magenta
+    puts '-' * 10
+    results.each { |k,v| super(k,v) }
+    puts
   end
 end
