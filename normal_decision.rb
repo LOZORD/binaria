@@ -6,9 +6,7 @@ class NormalDecision < Decision
   def decide!(choice)
     result = choice == :yes ? yes : no
     status = asker.game.status
-    result.each do |prop, val|
-      status.update(prop, val)
-    end
+    status.update_with_change result
 
     @is_decided = true
   end

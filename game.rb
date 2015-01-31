@@ -46,11 +46,13 @@ class Game
 
       # print list of neighboring country relations (ally, enemy, neutral)
       if report_day?
-        puts 'Your Master of Espionage reports the following on your neighbors...'.bold
+        puts
+        puts '== Your Master of Espionage reports the following on your neighbors =='.bold
         neighbors.each do |n|
           color = n.ally? ? :green : n.neutral? ? :yellow : :red
           puts "#{ n.name }: #{ n.relation }".send(color)
         end
+        puts
       end
 
       # check if any end-game/losing conditions are satisfied
@@ -289,7 +291,7 @@ class Game
     end
 
     def report_day?
-      cal_day_today == Holiday::DAYS_IN_YEAR % 7
+      cal_day_today % 7 == 6
     end
   # end private
 end

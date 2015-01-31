@@ -13,6 +13,7 @@ class HolidayDecision < Decision
     game = asker.game
     status = game.status
     celebration = nil
+    p result
     result.each do |prop, val|
       if prop.to_sym != :celebration
         status.update(prop, val)

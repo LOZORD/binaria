@@ -15,7 +15,7 @@ class StatusChange
   end
 
   def non_zero_changes
-    changes.reject { |k, v| v.zero? }
+    changes.reject { |_, v| v.zero? }
   end
 
   def print_result (key, value)

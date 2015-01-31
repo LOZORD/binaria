@@ -30,12 +30,12 @@ class Status
   end
 
   def update_with_change (status_change)
-    unless status_change is_a? StatusChange
+    unless status_change.is_a? StatusChange
       fail '`update_with_change` must take a StatusChange object as the argument'.red
     end
 
     RESOURCES.each do |resource|
-      update(resource, status_change[resource])
+      update(resource, status_change.changes[resource])
     end
   end
   private
