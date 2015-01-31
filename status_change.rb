@@ -14,6 +14,10 @@ class StatusChange
     changes.each { |k, v| print_result k, v }
   end
 
+  def non_zero_changes
+    changes.reject { |k, v| v.zero? }
+  end
+
   def print_result (key, value)
     fail "Value `#{ value }` must be a number!".red unless value.is_a? Numeric
     v =

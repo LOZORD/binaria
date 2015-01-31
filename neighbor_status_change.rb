@@ -7,7 +7,7 @@ class NeighborStatusChange < StatusChange
     if @neighbor.nil?
       fail 'NeighborStatusChange must have an associated neighbor!'
     end
-    @changes[:mood] = init_obj[:neighbor] || 0
+    @changes[:mood] = init_obj[:mood] || 0
   end
 
   def print_result (country_name, results)

@@ -5,8 +5,8 @@ class Decision
     fail 'Decision needs an Advisor!'.red if @asker.nil?
     @type  = init_obj[:type]
     @question = init_obj[:question]
-    @yes = StatusChange.new init_obj[:yes]
-    @no  = StatusChange.new init_obj[:no]
+    @yes = StatusChange.new(init_obj[:yes])
+    @no  = StatusChange.new(init_obj[:no])
     @is_decided = false
   end
 
@@ -15,24 +15,24 @@ class Decision
     puts "#{ asker.name } asks:".yellow
     puts "\"#{ question }\""
     puts "Choosing #{ 'yes'.green }:".bold.blue
-    yes.each do |k, v|
+    yes.non_zero_changes.each do |k, v|
       print_result(k,v)
     end
-    #puts yes
     puts "\nChoosing #{ 'no'.red }:".bold.blue
-    no.each do |k, v|
+    no.non_zero_changes.each do |k, v|
       print_result(k,v)
     end
-    #puts no
   end
 
   def print_result (key, value)
     fail "Value `#{ value }` must be a number!".red unless value.is_a? Numeric
     v =
-    if value >= 0
+    if value > 0
       ('+' + value.to_s).green
-    else
+    elsif value < 0
       (value.to_s).red
+    else
+      (value.to_s).yellow
     end
 
     puts "#{ nice_key(key).cyan }: #{ v }"
