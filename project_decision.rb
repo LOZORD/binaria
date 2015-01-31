@@ -11,8 +11,8 @@ class ProjectDecision < Decision
       # first create a new project to add to the game
       arg_data = {
         name: @project_name,
-        game: self.game,
-        daily_status:       StatusChange.new(yes[:daily_status]),
+        game: asker.game,
+        daily_status:       StatusChange.new(yes[:daily_status]), #FIXME
         completion_status:  StatusChange.new(yes[:completion_status]),
         days_to_completion: @days_to_completion
       }

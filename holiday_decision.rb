@@ -1,44 +1,27 @@
 class HolidayDecision < Decision
-  attr_accessor :name
+  attr_accessor :name, :new_holiday
   def initialize (init_obj)
     super(init_obj)
     @name = init_obj[:holiday_name]
+    init_obj = {
+                  game:         @asker.game,
+                  name:         @name,
+                  celebration:  init_obj[:yes][:celebration],
+                  day:          @asker.game.cal_day_today
+               }
+    @new_holiday = Holiday.new(init_obj)
   end
 
   def decide! (choice)
     result = choice == :yes ? yes : no
+
     if result == :yes
       puts "JOYOUS #{ name } TO YOU DEAR LEADER!".bold_green_on_yellow
-    end
-    game = asker.game
-    status = game.status
-    celebration = nil
-    p result
-    result.each do |prop, val|
-      if prop.to_sym != :celebration
-        status.update(prop, val)
-      elsif prop.to_sym == :celebration
-        celebration = val
-      else
-        fail "Status #{status} has no corresponding property `#{prop}`".red
-      end
-    end
-
-    unless celebration.nil?
       holiday_calendar = asker.game.holidays
-
-      init_obj = {
-                    game:         game,
-                    name:         name,
-                    celebration:  celebration,
-                    day:          game.cal_day_today,
-                    game:         asker.game
-                 }
-
-      new_holiday = Holiday.new(init_obj)
-
       holiday_calendar[game.cal_day_today] << new_holiday
     end
+
+    asker.game.status.update_with_change result
 
     @is_decided = true
   end

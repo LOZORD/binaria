@@ -2,7 +2,11 @@ class Status
   ONE_MILLION = 1_000_000
   MAX_TAX = 100.0
   MAX_MOOD = 100.0
-  RESOURCES = [:gold, :rock, :wood, :food, :tax_rate, :serf_happiness, :lord_happiness]
+  RESOURCES = [:gold, :rock, :wood, :food, :tax_rate, :serf_happiness,
+    :lord_happiness]
+  RESOURCE_LIMITS = { gold: 0, rock: 0, wood: 0, food: 0,
+    tax_rate: (0..MAX_TAX), serf_happiness: (0..MAX_MOOD),
+    lord_happiness: (0..MAX_MOOD) }
 
   RESOURCES.each { |r| attr_accessor r }
 
@@ -47,13 +51,25 @@ class Status
     def update(some_attr, change_amnt)
       my_attr = prep_attr(some_attr)
 
-      temp = instance_variable_get(my_attr) + change_amnt
-      apply(my_attr, temp)
+      orig = instance_variable_get(my_attr)
+      temp = orig + change_amnt
+
+      limit = RESOURCE_LIMITS[rem_at_sign some_attr]
+
+      val = nil
+
+      if limit.is_a? Range
+        val = temp.between?(limit.begin, limit.end) ? temp : orig
+      elsif limit.is_a? Numeric
+        val = temp
+      else
+        fail 'Bad limit for resource!'
+      end
+
+      apply(my_attr, val)
     end
     def prep_attr(some_attr)
-      unless some_attr.to_s[0] == '@'
-        some_attr = '@' + some_attr.to_s
-      end
+      some_attr = add_at_sign some_attr
 
       unless self.instance_variable_defined?(some_attr)
         owner_name = ''
@@ -66,5 +82,19 @@ class Status
       end
 
       some_attr
+    end
+
+    def add_at_sign(some_attr)
+      unless some_attr.to_s[0] == '@'
+        some_attr = '@' + some_attr.to_s
+      end
+      some_attr.to_sym
+    end
+
+    def rem_at_sign(some_attr)
+      if some_attr.to_s[0] == '@'
+        some_attr = some_attr.to_s[1..-1]
+      end
+      some_attr.to_sym
     end
 end
