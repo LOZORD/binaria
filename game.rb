@@ -116,6 +116,8 @@ class Game
           puts "#{ decision.asker.name.bold }:\t#{ decision.question }"
           puts "\t#{ (' ' + their_decision.to_s.upcase + ' ').send(colorized) }"
         end
+        puts '-- ' * 6
+        puts
       else
         puts "No decisions need to be made today #{ player_name }...".bold.black
       end
@@ -279,6 +281,7 @@ class Game
       cal_day_today % tax_period == tax_period - 1
     end
 
+    # TODO better way of calculating taxes
     def collect_taxes!
       puts 'HAPPY QUARTERLY TAX DAY!'.green
       tax_amnt = (status.tax_rate/100.0) + 1

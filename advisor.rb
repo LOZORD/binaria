@@ -35,8 +35,8 @@ class Advisor
         options[:holiday_name] = decision_hash[:holiday_name]
         HolidayDecision.new(options)
       when :project
-        options[:project_name]      = decision_hash[:project_name]
-        options[:days_to_complete]  = decision_hash[:days_to_complete]
+        options[:project_name]        = decision_hash[:project_name]
+        options[:days_to_completion]  = decision_hash[:days_to_completion]
         ProjectDecision.new(options)
       else
         fail "Unsupported Decision type `#{ decision_hash[:type] }` for regular Advisor!".red

@@ -35,7 +35,7 @@ class Status
 
   def update_with_change (status_change)
     unless status_change.is_a? StatusChange
-      fail '`update_with_change` must take a StatusChange object as the argument'.red
+      fail "`update_with_change` must take a StatusChange object as the argument, got #{ status_change.class}".red
     end
 
     RESOURCES.each do |resource|

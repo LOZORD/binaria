@@ -14,14 +14,7 @@ class Decision
     fail 'Decision already decided!'.red if is_decided
     puts "#{ asker.name } asks:".yellow
     puts "\"#{ question }\""
-    puts "Choosing #{ 'yes'.green }:".bold.blue
-    yes.non_zero_changes.each do |k, v|
-      print_result(k,v)
-    end
-    puts "\nChoosing #{ 'no'.red }:".bold.blue
-    no.non_zero_changes.each do |k, v|
-      print_result(k,v)
-    end
+    display_consequences
   end
 
   def print_result (key, value)
@@ -36,6 +29,17 @@ class Decision
     end
 
     puts "#{ nice_key(key).cyan }: #{ v }"
+  end
+
+  def display_consequences
+    puts "Choosing #{ 'yes'.green }:".bold.blue
+    yes.non_zero_changes.each do |k, v|
+      print_result(k,v)
+    end
+    puts "\nChoosing #{ 'no'.red }:".bold.blue
+    no.non_zero_changes.each do |k, v|
+      print_result(k,v)
+    end
   end
 
   private
