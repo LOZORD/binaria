@@ -24,6 +24,13 @@ class Status
     @lord_happiness = init_obj[:lord_happiness] || MAX_MOOD / 2
   end
 
+  def get_with_sym (some_sym)
+    self.instance_variable_get(add_at_sign some_sym)
+  end
+
+  def tax_frac
+    self.tax_rate/100
+  end
 
   def to_s
     # XXX: figure out how to right align the RHS attr

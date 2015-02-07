@@ -6,6 +6,7 @@ require 'json'
 class Game
   attr_accessor :day, :holidays, :neighbors, :advisors, :status, :rng, :player_name, :projects
   JSON_OPTS = { symbolize_names: true }
+  TAXABLES  = [ :rock, :wood, :food ]
   def initialize
     @day = 0
     @holidays = Array.new(Holiday::DAYS_IN_YEAR) { Array.new }
@@ -281,16 +282,24 @@ class Game
       cal_day_today % tax_period == tax_period - 1
     end
 
-    # TODO better way of calculating taxes
+    # TODO: check fairness and floor
     def collect_taxes!
       puts 'HAPPY QUARTERLY TAX DAY!'.green
-      tax_amnt = (status.tax_rate/100.0) + 1
-      temp = status.gold * tax_amnt
-      status.gold += temp.floor
-      if status.tax_rate > 0
-        status.serf_happiness -= 5
-        status.lord_happiness -= 5
-      end
+
+      tax_amnt = TAXABLES.map { |item| status.get_with_sym(item) * self.status.tax_frac }.reduce(:+)
+
+      no_tax = status.tax_rate.zero?
+
+      tax_change_obj = {
+       serf_happiness: no_tax ? 0 : -5,
+       lord_happiness: no_tax ? 0 : -5,
+       rock:            -1 * status.rock * status.tax_frac,
+       wood:            -1 * status.wood * status.tax_frac,
+       food:            -1 * status.food * status.tax_frac,
+       gold:            tax_amnt
+      }
+
+      status.update_with_change(StatusChange.new tax_change_obj)
     end
 
     def report_day?

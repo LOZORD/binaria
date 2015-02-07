@@ -21,7 +21,7 @@ class Holiday
     # FIXME --> this should really be an object...
     celebration.each do |some_attr, val|
       puts "\t Your kingdom's #{ some_attr } is changed by #{ val }"
-      game.status.update(some_attr, val)
+      game.status.update(some_attr, val) # FIXME: this breaks
     end
   end
 end
