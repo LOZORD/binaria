@@ -60,6 +60,7 @@ class Game
       # check if any end-game/losing conditions are satisfied
       if lost_game?
         puts "CONGRATULATIONS, YOU'VE RULED FOR #{ day } DAYS!"
+        write_score_to_file
         break
       end
 
@@ -307,6 +308,12 @@ class Game
 
     def report_day?
       cal_day_today % 7 == 6
+    end
+
+    def write_score_to_file
+      scoresFile = File.open('scores.csv', 'a')
+      scoresFile.puts "#{ player_name }, #{ day }, #{ Time.new.to_s }"
+      scoresFile.close
     end
   # end private
 end
