@@ -49,6 +49,11 @@ class Status
       update(resource, status_change.changes[resource])
     end
   end
+
+  # class method
+  def self.nice_key (key)
+    key.to_s.split('_').map { |n| n.capitalize }.join(' ')
+  end
   private
     def apply(some_attr, val)
       my_attr = prep_attr(some_attr)

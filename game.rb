@@ -15,12 +15,13 @@ class Game
     @advisors = build_advisors
     @status = Status.new
     @rng = @status.rng
-    puts 'What is your name, Great Leader?'
+    print "What is your name, Great Leader?\n> "
     puts "Welcome to your kingdom #{@player_name = gets.strip}!"
   end
 
   def play
     print_help
+    print '> '
     user_in = gets.chomp
     until user_in == 'QUIT'
 
@@ -97,6 +98,8 @@ class Game
               puts 'No more decisions today'
             end
           end
+          # get the next input
+          print '> '
           user_in = gets
         end
 

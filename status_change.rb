@@ -18,7 +18,7 @@ class StatusChange
     changes.reject { |_, v| v.zero? }
   end
 
-  def print_result (key, value)
+  def self.print_result (key, value)
     fail "Value `#{ value }` must be a number!".red unless value.is_a? Numeric
     v =
     if value >= 0
@@ -27,6 +27,6 @@ class StatusChange
       (value.to_s).red
     end
 
-    puts "#{ nice_key(key).cyan }: #{ v }"
+    puts "#{ Status.nice_key(key).cyan }: #{ v }"
   end
 end

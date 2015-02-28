@@ -6,7 +6,7 @@ class HolidayDecision < Decision
     init_obj = {
                   game:         @asker.game,
                   name:         @name,
-                  celebration:  init_obj[:yes][:celebration], # TODO make a StatusChange instead
+                  celebration:  StatusChange.new(init_obj[:yes][:celebration]),
                   day:          @asker.game.cal_day_today
                }
     @new_holiday = Holiday.new(init_obj)

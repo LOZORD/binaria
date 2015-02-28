@@ -18,10 +18,9 @@ class Holiday
 
   def celebrate!
     puts "Happy #{ name }!"
-    # FIXME --> this should really be an object...
-    celebration.each do |some_attr, val|
-      puts "\t Your kingdom's #{ some_attr } is changed by #{ val }"
-      game.status.update(some_attr, val) # FIXME: this breaks
+    celebration.non_zero_changes.each do |k,v|
+      StatusChange.print_result(k,v)
     end
+    game.status.update_with_change celebration
   end
 end

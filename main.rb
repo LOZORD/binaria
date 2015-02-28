@@ -1,7 +1,1 @@
-require_relative 'include.rb'
-
-g = Game.new
-
-g.play
-
-puts 'Goodbye!'
+require_relative 'include.rb'; Game.new.play; puts 'Goodbye!'

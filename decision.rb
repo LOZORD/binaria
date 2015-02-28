@@ -28,7 +28,7 @@ class Decision
       (value.to_s).yellow
     end
 
-    puts "#{ nice_key(key).cyan }: #{ v }"
+    puts "#{ Status.nice_key(key).cyan }: #{ v }"
   end
 
   def display_consequences
@@ -42,8 +42,4 @@ class Decision
     end
   end
 
-  private
-    def nice_key (key)
-      key.to_s.split('_').map { |n| n.capitalize }.join(' ')
-    end
 end
