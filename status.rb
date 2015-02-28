@@ -35,7 +35,7 @@ class Status
   def to_s
     # use str.rjust(80) if you want to
     RESOURCES.map do |item|
-      "#{ item.to_s.upcase.bold.yellow }: #{ self.send(item).to_s.yellow }"
+      "#{ Status.nice_key(item).upcase.bold.yellow }: #{ self.send(item).to_s.yellow }"
     end.join("\n")
   end
 

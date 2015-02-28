@@ -196,7 +196,7 @@ class Game
       Press <Enter> to forward through your visitors\' jibber-jabber.
 
       When you are ready to make your Official Decree,
-        enter in "yes" for Yes, and "no" for No".
+        enter in "yes" for Yes, and "no" for No.
 
       What could go wrong?
 
