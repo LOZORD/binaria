@@ -22,8 +22,8 @@ class Game
   def play
     print_help
     print '> '
-    user_in = gets.chomp
-    until user_in == 'QUIT'
+    user_in = gets.chomp.downcase
+    until user_in == 'quit'
 
       # first celebrate today's holidays
       puts "~~~ DAY #{ day + 1 } ~~~".white_on_blue

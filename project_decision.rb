@@ -33,7 +33,8 @@ class ProjectDecision < Decision
 
       asker.game.projects << new_proj
     else
-      asker.game.status.update_with_change StatusChange.new(no)
+      no = StatusChange.new(no) unless no.is_a? StatusChange
+      asker.game.status.update_with_change no
     end
   end
 
