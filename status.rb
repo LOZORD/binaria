@@ -33,8 +33,7 @@ class Status
   end
 
   def to_s
-    # XXX: figure out how to right align the RHS attr
-    # solution: str.rjust(80), but do we still want to use this?
+    # use str.rjust(80) if you want to
     RESOURCES.map do |item|
       "#{ item.to_s.upcase.bold.yellow }: #{ self.send(item).to_s.yellow }"
     end.join("\n")

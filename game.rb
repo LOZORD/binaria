@@ -285,7 +285,7 @@ class Game
       cal_day_today % tax_period == tax_period - 1
     end
 
-    # TODO: check fairness
+    # check fairness
     def collect_taxes!
       puts 'HAPPY QUARTERLY TAX DAY!'.green
 
