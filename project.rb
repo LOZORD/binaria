@@ -37,7 +37,7 @@ class Project
       puts "PROJECT #{ name }: COMPLETE!".bold.magenta
       game.status.update_with_change completion_status
     else
-      puts "PROJECT #{ name }: #{ days_to_completion } days until complete" # TODO: plurals
+      puts "PROJECT #{ name }: #{ days_to_completion } day(s) until complete"
       game.status.update_with_change daily_status
     end
   end
