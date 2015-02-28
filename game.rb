@@ -291,12 +291,12 @@ class Game
       no_tax = status.tax_rate.zero?
 
       tax_change_obj = {
-       serf_happiness: no_tax ? 0 : -5,
-       lord_happiness: no_tax ? 0 : -5,
-       rock:            -1 * status.rock * status.tax_frac,
-       wood:            -1 * status.wood * status.tax_frac,
-       food:            -1 * status.food * status.tax_frac,
-       gold:            tax_amnt
+        serf_happiness:  (no_tax ? 0 : -5),
+        lord_happiness:  (no_tax ? 0 : -5),
+        rock:            (-1 * status.rock * status.tax_frac).floor,
+        wood:            (-1 * status.wood * status.tax_frac).floor,
+        food:            (-1 * status.food * status.tax_frac).floor,
+        gold:            (tax_amnt).floor
       }
 
       status.update_with_change(StatusChange.new tax_change_obj)

@@ -23,6 +23,8 @@ class HolidayDecision < Decision
     @is_decided = true
   end
 
+  # FIXME need to print results and what happens on celebration
+
   def print_result(key, value)
     if (value.is_a? Hash) && (!value.empty?)
       puts "Every year on this day (#{ asker.game.human_cal_day_today }):".yellow
